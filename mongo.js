@@ -44,9 +44,6 @@ const listItems = () => {
     });
 }
 
-
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
 const getWeek = () => {
   const one_week = 1000*60*60*24*7;
   const today = new Date();
@@ -63,8 +60,9 @@ const getWeek = () => {
 
 //List Items of a day
 const listDay = (day) => {
-  Schedule.find({'day': day}).sort('from')
+  return Schedule.find({'day': day}).sort('from')
     .then(items => {
+      data = [];
       for (item of items){
         if (item.week !== "Weekly" && item.week !== getWeek()){
           continue;
@@ -89,9 +87,10 @@ const listDay = (day) => {
         }else {
           to = `${item.to}AM`;
         }
-        console.info(`${from}-${to}: ${item.course} ${item.category} @ ${item.location}`);
+        data.push(`${from}-${to}: ${item.course} ${item.category} @ ${item.location}`);
       }
       db.close();
+      return data;
     })
 }
 

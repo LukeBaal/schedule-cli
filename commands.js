@@ -7,7 +7,7 @@ const {
   removeItem,
   listItems,
   listDay
-} = require('./index');
+} = require('./pouch');
 
 const questions = [
   {
@@ -87,6 +87,7 @@ program
   .action(() => {
     prompt(questions).then(answers => {
       addItem({ 
+        _id: new Date().toJSON(),
         day: answers.day,
         from: answers.from,
         to: answers.to,
@@ -106,6 +107,7 @@ program
   .action(_id => {
     prompt(questions).then(answers => {
       updateItem(_id, {
+        _id: _id,
         day: answers.day,
         from: answers.from,
         to: answers.to,
@@ -130,7 +132,9 @@ program
   .alias('l')
   .description('List all items')
   .action(() => {
-    listItems().then(items => console.info(items));
+    listItems()
+      .then(items => items.forEach(item => console.log(item)))
+      .catch(err => console.log(err));
   });
 
 //List all items of a given day
@@ -139,7 +143,9 @@ program
   .alias('d')
   .description('List all items of a given day')
   .action(d => {
-    listDay(d);
+    listDay(d)
+      .then(items => items.forEach(item => console.log(item)))    
+      .catch(err => console.log(err));
   })
 
 program.parse(process.argv);
