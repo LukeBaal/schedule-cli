@@ -11,8 +11,7 @@ const db = new PouchDB('http://admin:admin@localhost:5984/schedule', {skip_setup
 //   .then(() => db.sync(remotedb, {live: true, rety: true}))
 //   .catch(err => console.log(err));
 // PouchDB.debug.enable('*');
-
-db.info().catch(err => console.log(err));
+// db.info().catch(err => console.log(err));
 
 
 const addItem = item => {
