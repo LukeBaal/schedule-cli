@@ -1,7 +1,15 @@
 const PouchDB = require('pouchdb');
 PouchDB.plugin(require('pouchdb-find'));
 
-const db = new PouchDB('schedule');
+// const db = new PouchDB('schedule');
+const db = new PouchDB('http://admin:admin@localhost:5984/schedule', {skip_setup: true});
+// const user = {
+//   name: 'admin',
+//   password: 'admin'
+// };
+// remotedb.login(user.name, user.password)
+//   .then(() => db.sync(remotedb, {live: true, rety: true}))
+//   .catch(err => console.log(err));
 // PouchDB.debug.enable('*');
 
 db.info().catch(err => console.log(err));
@@ -58,11 +66,6 @@ const getWeek = () => {
   }
 }
 
-// Create index for the 'day' and from' time
-db.createIndex({
-  index: {fields: ['day', 'from']}
-});
-
 //List Items of a day
 const listDay = (day) => {
   return db.createIndex({
@@ -103,31 +106,11 @@ const listDay = (day) => {
   }).catch(err => console.log(err));
 }
 
-// const doc = {
-//   _id: new Date().toJSON(),
-//   day: 'Monday',
-//   from: '09:40',
-//   to: '11:00',
-//   course: 'OS',
-//   week: 'Weekly',
-//   category: 'Tutorial',
-//   location: 'UA1220'
-// };
-
 // listItems().then(results => {
 //   results.forEach(doc => removeItem(doc._id));
 // });
 // addItem(doc);
-// listItems().then(results => console.info(results));
-// listDay('Monday');
 
-// removeItem('2018-03-16T13:37:28.686Z');
-// updateItem('os lab 4 report', doc);
-// db.put(doc).catch(err => console.log(err));
-// db.get('os lab 4 report').then(doc => console.log(doc)).catch(err => console.log(err));
-// listDay('Monday')
-//       .then(items => console.info(items))
-//       .catch(err => console.log(err));
 // const sdata = require('./schedule');
 // let i = 0;
 // let start = new Date();
